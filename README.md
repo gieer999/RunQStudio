@@ -34,3 +34,16 @@ src/               kod aplikacji
 tests/             testy
 README.md          opis projektu
 CHANGELOG.md       historia zmian
+
+## Główne zasady
+
+- specyfikacja biznesowa jest ważniejsza niż konkretna implementacja,
+- dane źródłowe powinny być archiwizowane,
+- import powinien być powtarzalny,
+- brak pola opcjonalnego nie może zatrzymywać całego importu,
+- czas netto jest preferowany, a czas brutto przechowywany zawsze,
+- rok urodzenia może początkowo pozostać nieznany.
+
+## Status
+
+Projekt jest w aktywnej fazie prototypowania.
