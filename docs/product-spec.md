@@ -71,83 +71,94 @@ metadata.json
 
 ```
 
-Cel archiwizacji
-możliwość odtworzenia importu,
-ochrona przed zmianą strony źródłowej,
-możliwość ponownej normalizacji,
-audyt pochodzenia danych.
-7. Model danych zawodnika
+### Cel archiwizacji
+
+- możliwość odtworzenia importu,
+- ochrona przed zmianą strony źródłowej,
+- możliwość ponownej normalizacji,
+- audyt pochodzenia danych.
+
+## 7. Model danych zawodnika
 
 Minimalny rekord wyniku powinien zawierać:
 
-identyfikator zawodów,
-rok zawodów,
-dystans,
-miejsce,
-imię,
-nazwisko,
-płeć,
-kraj,
-klub,
-kategoria,
-rok urodzenia,
-czas netto,
-czas brutto,
-czas używany do RunQ,
-adres źródłowy.
-Reguły jakości danych
-rok urodzenia może być nieznany,
-czas brutto powinien być przechowywany zawsze,
-czas netto jest preferowany do obliczeń,
-brak opcjonalnego pola nie zatrzymuje importu,
-błędne rekordy powinny być raportowane.
-8. RunQ
+- identyfikator zawodów,
+- rok zawodów,
+- dystans,
+- miejsce,
+- imię,
+- nazwisko,
+- płeć,
+- kraj,
+- klub,
+- kategoria,
+- rok urodzenia,
+- czas netto,
+- czas brutto,
+- czas używany do RunQ,
+- adres źródłowy.
+
+### Reguły jakości danych
+
+- rok urodzenia może być nieznany,
+- czas brutto powinien być przechowywany zawsze,
+- czas netto jest preferowany do obliczeń,
+- brak opcjonalnego pola nie zatrzymuje importu,
+- błędne rekordy powinny być raportowane.
+
+## 8. RunQ
 
 RunQ jest wynikiem normalizującym rezultat zawodnika z uwzględnieniem między innymi:
 
-wieku,
-prędkości,
-dystansu,
-płci,
-jakości wyniku.
+- wieku,
+- prędkości,
+- dystansu,
+- płci,
+- jakości wyniku.
 
 Ostateczna formuła pozostaje przedmiotem dalszych testów.
 
-9. Rankingi
+## 9. Rankingi
 
 Planowane rankingi:
 
-ranking pojedynczych zawodów,
-ranking open,
-ranking masters 40+,
-ranking kobiet,
-ranking mężczyzn,
-ranking roczny,
-ranking według dystansu,
-profil zawodnika.
-10. Wymagania techniczne
-importer musi być konfigurowalny,
-reguły biznesowe powinny być oddzielone od kodu pobierającego dane,
-import powinien być powtarzalny,
-dane powinny być możliwe do przeliczenia ponownie,
-system powinien przechowywać wersję reguł,
-aplikacja powinna działać lokalnie przed wdrożeniem online.
-11. Otwarte pytania
-jaka będzie docelowa formuła RunQ,
-jak uwzględniać różne dystanse,
-czy stosować limity maksymalnego wyniku,
-jak traktować brak roku urodzenia,
-jak identyfikować tę samą osobę w różnych zawodach,
-jak obsłużyć korekty wyników,
-jak prezentować progi jakości,
-czy tworzyć ranking tylko 40+, czy również open,
-jak często odświeżać dane,
-jakie źródło będzie kolejne po STS Timing.
-12. Najbliższe prace
-przenieść aktualny importer do repozytorium,
-uporządkować strukturę kodu,
-opisać format standard.csv,
-dodać walidację danych,
-przygotować pierwszą wersję formuły RunQ,
-zbudować tabelę rankingu,
-dodać testy dla importu i obliczeń.
+- ranking pojedynczych zawodów,
+- ranking open,
+- ranking masters 40+,
+- ranking kobiet,
+- ranking mężczyzn,
+- ranking roczny,
+- ranking według dystansu,
+- profil zawodnika.
+
+## 10. Wymagania techniczne
+
+- importer musi być konfigurowalny,
+- reguły biznesowe powinny być oddzielone od kodu pobierającego dane,
+- import powinien być powtarzalny,
+- dane powinny być możliwe do przeliczenia ponownie,
+- system powinien przechowywać wersję reguł,
+- aplikacja powinna działać lokalnie przed wdrożeniem online.
+
+## 11. Otwarte pytania
+
+- jaka będzie docelowa formuła RunQ,
+- jak uwzględniać różne dystanse,
+- czy stosować limity maksymalnego wyniku,
+- jak traktować brak roku urodzenia,
+- jak identyfikować tę samą osobę w różnych zawodach,
+- jak obsłużyć korekty wyników,
+- jak prezentować progi jakości,
+- czy tworzyć ranking tylko 40+, czy również open,
+- jak często odświeżać dane,
+- jakie źródło będzie kolejne po STS Timing.
+
+## 12. Najbliższe prace
+
+1. przenieść aktualny importer do repozytorium,
+2. uporządkować strukturę kodu,
+3. opisać format `standard.csv`,
+4. dodać walidację danych,
+5. przygotować pierwszą wersję formuły RunQ,
+6. zbudować tabelę rankingu,
+7. dodać testy dla importu i obliczeń.
