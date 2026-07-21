@@ -35,6 +35,8 @@ tests/             testy
 README.md          opis projektu
 CHANGELOG.md       historia zmian
 
+```
+
 ## Główne zasady
 
 - specyfikacja biznesowa jest ważniejsza niż konkretna implementacja,
