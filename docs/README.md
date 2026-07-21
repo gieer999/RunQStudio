@@ -17,14 +17,14 @@ docs/
 └── decisions/
 
 ```
-Zasada dokumentacji
+## Zasada dokumentacji
 
 Dokumentacja opisuje:
 
-co system ma robić,
-dlaczego dana reguła istnieje,
-jakie dane są wymagane,
-jakie są wyjątki,
-jakie pytania pozostają otwarte.
+- co system ma robić,
+- dlaczego dana reguła istnieje,
+- jakie dane są wymagane,
+- jakie są wyjątki,
+- jakie pytania pozostają otwarte
 
 Kod jest implementacją specyfikacji, a nie jej jedynym źródłem.
