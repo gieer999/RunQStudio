@@ -47,17 +47,17 @@
 
 ---
 
-## Phase 6 – Public Platform
+## Phase 6 – Platform
 - Web application
 - Public rankings
 - Public API
-- Documentation
+- Authentication
 - User accounts
 
 ---
 ## Future ideas
 - Additional race providers
-- World rankings
-- Club rankings
-- Age progression
-- Predictive performance models
+- Global RunQ rankings
+- Global 40+ RunQ rankings
+- Real-world application
+
