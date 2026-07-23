@@ -3,19 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>RunQ Importer v0.5</title>
+  <title>RunQ Studio v{{ app_version }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 <header class="hero">
   <div>
     <div class="eyebrow">RUNQ · WARSAW PILOT</div>
-    <h1>Importer wyników STS</h1>
-    <p>Archiwizacja strony źródłowej → surowy CSV → standard RunQ → podgląd HTML.</p>
+    <h1>RunQ Studio</h1>
+    <p>STS → source → raw → standard → RunQ → ranking.</p>
   </div>
-  <form method="post" action="{{ url_for('import_all') }}">
-    <button class="btn primary" type="submit">Pobierz wszystkie edycje</button>
-  </form>
+  <div class="hero-actions">
+    <a class="btn primary" href="{{ url_for('rankings') }}">Rankingi RunQ</a>
+    <form method="post" action="{{ url_for('import_all') }}">
+      <button class="btn primary" type="submit">Pobierz wszystkie edycje</button>
+    </form>
+  </div>
 </header>
 
 <main>
@@ -28,8 +31,8 @@
   <section class="summary">
     <div class="metric"><span>11</span><small>edycji</small></div>
     <div class="metric"><span>2021–2026</span><small>zakres pilota</small></div>
-    <div class="metric"><span>4</span><small>warstwy archiwum</small></div>
-    <div class="metric"><span>0.5</span><small>wersja</small></div>
+    <div class="metric"><span>5</span><small>warstw danych</small></div>
+    <div class="metric"><span>{{ app_version }}</span><small>wersja aplikacji</small></div>
   </section>
 
   {% for kind, label in [('Półmaraton','Półmaraton Warszawski'), ('Maraton','Maraton Warszawski')] %}
@@ -40,20 +43,23 @@
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Edycja</th><th>Źródło STS</th><th>Status</th><th>Rekordy</th><th>Ostatnie pobranie</th><th>Akcje</th></tr></thead>
+        <thead><tr><th>Edycja</th><th>Data</th><th>Źródło STS</th><th>Status</th><th>Standard</th><th>RunQ</th><th>Ostatnie pobranie</th><th>Akcje</th></tr></thead>
         <tbody>
         {% for r in races if r.kind == kind %}
           <tr>
-            <td><strong>{{ r.race_id|upper }}</strong><br><span class="muted">{{ r.distance_km }} km</span></td>
+            <td><strong>{{ r.race_id|upper }}</strong><br><span class="muted">{{ '%.4g'|format(r.distance_km) }} km</span></td>
+            <td>{{ r.date }}</td>
             <td><a href="{{ r.url }}" target="_blank">{{ r.event_code }} / dystans {{ r.distance_id }}</a></td>
             <td><span class="badge {{ 'ok' if r.status == 'Pobrano' else 'idle' }}">{{ r.status }}</span></td>
             <td>{{ r.rows if r.rows is not none else '—' }}</td>
+            <td>{{ r.runq_rows if r.runq_rows is not none else '—' }}</td>
             <td>{{ r.downloaded_at if r.downloaded_at else '—' }}{% if r.sha256_short %}<br><code>{{ r.sha256_short }}</code>{% endif %}</td>
             <td class="actions">
               <form method="post" action="{{ url_for('import_one', race_id=r.race_id) }}"><button class="btn" type="submit">Pobierz</button></form>
               {% if r.status == 'Pobrano' %}
                 <a class="btn ghost" href="{{ url_for('preview', race_id=r.race_id) }}">Podgląd</a>
-                <a class="btn ghost" href="{{ url_for('files', race_id=r.race_id, kind='standard', filename='latest.csv') }}">CSV</a>
+                <a class="btn ghost" href="{{ url_for('files', race_id=r.race_id, kind='standard', filename='latest.csv') }}">Standard</a>
+                <a class="btn ghost" href="{{ url_for('files', race_id=r.race_id, kind='runq', filename='latest.csv') }}">RunQ</a>
               {% endif %}
             </td>
           </tr>
@@ -65,9 +71,14 @@
   {% endfor %}
 
   <section class="flow panel">
-    <div><b>1</b><span>STS Timing</span></div><i>→</i><div><b>2</b><span>source.html</span></div><i>→</i><div><b>3</b><span>raw.csv</span></div><i>→</i><div><b>4</b><span>standard.csv</span></div><i>→</i><div><b>5</b><span>Ranking RunQ później</span></div>
+    <div><b>1</b><span>STS Timing</span></div><i>→</i>
+    <div><b>2</b><span>source.html</span></div><i>→</i>
+    <div><b>3</b><span>raw.csv</span></div><i>→</i>
+    <div><b>4</b><span>standard.csv</span></div><i>→</i>
+    <div><b>5</b><span>runq.csv</span></div><i>→</i>
+    <div><b>6</b><span>Ranking</span></div>
   </section>
 </main>
-<footer>RunQ Importer v0.5 · dane pozostają lokalnie na komputerze</footer>
+<footer>RunQ Studio v{{ app_version }} · dane pozostają lokalnie na komputerze</footer>
 </body>
 </html>
