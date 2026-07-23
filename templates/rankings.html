@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Rankingi RunQ · RunQ Studio v0.7</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="hero compact">
+  <div>
+    <div class="eyebrow">RUNQ · RANKINGS</div>
+    <h1>Rankingi RunQ</h1>
+    <p>Domyślnie: Polska, mężczyźni, Top 100. Filtry można dowolnie łączyć.</p>
+  </div>
+  <a class="btn primary" href="{{ url_for('index') }}">Importer</a>
+</header>
+
+<main>
+  <section class="panel filters">
+    <form method="get" action="{{ url_for('rankings') }}" class="filter-grid">
+      <label>Year
+        <select name="year"><option value="">All</option>
+          {% for item in years %}<option value="{{ item }}" {% if filters.year|string == item|string %}selected{% endif %}>{{ item }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>Distance
+        <select name="distance"><option value="">All</option>
+          {% for item in distances %}<option value="{{ item }}" {% if filters.distance|string == item|string %}selected{% endif %}>{{ '%.3g'|format(item / 1000) }} km</option>{% endfor %}
+        </select>
+      </label>
+      <label>Sex
+        <select name="sex"><option value="">All</option>
+          {% for item in sexes %}<option value="{{ item }}" {% if filters.sex == item %}selected{% endif %}>{{ item }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>40+ Category
+        <select name="age">
+          <option value="" {% if not filters.age %}selected{% endif %}>All</option>
+          <option value="under40" {% if filters.age == 'under40' %}selected{% endif %}>&lt;40</option>
+          <option value="40plus" {% if filters.age == '40plus' %}selected{% endif %}>40+</option>
+        </select>
+      </label>
+      <label>Country
+        <select name="country"><option value="">All</option>
+          {% for item in countries %}<option value="{{ item }}" {% if filters.country == item %}selected{% endif %}>{{ item }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>Name
+        <input type="search" name="name" value="{{ filters.name }}" placeholder="np. Kowalski">
+      </label>
+      <label>Top
+        <select name="limit">
+          {% for item in [10,25,50,100,250,500,1000] %}
+          <option value="{{ item }}" {% if filters.limit|string == item|string %}selected{% endif %}>{{ item }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <div class="filter-actions">
+        <button class="btn primary" type="submit">Pokaż</button>
+        <a class="btn ghost" href="{{ url_for('rankings') }}">Reset</a>
+      </div>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="panel-title">
+      <div><span class="dot"></span><h2>Wyniki</h2></div>
+      <div class="actions">
+        <span class="muted">{{ total_filtered }} pasujących rekordów</span>
+        <a class="btn ghost" href="{{ url_for('rankings_csv', **filters) }}">CSV</a>
+      </div>
+    </div>
+    <div class="table-wrap tall ranking-table">
+      <table>
+        <thead><tr>{% for col in columns %}<th class="col-{{ col|lower }}">{{ col }}</th>{% endfor %}</tr></thead>
+        <tbody>
+        {% for row in rows %}
+          <tr>
+          {% for col in columns %}
+            <td class="col-{{ col|lower }}">
+            {% if col == 'RunQ' %}<strong>{{ '%.3f'|format(row[col]) }}</strong>
+            {% else %}{{ row[col] }}
+            {% endif %}
+            </td>
+          {% endfor %}
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<footer>RunQ Engine 1.0 · RunQ Studio v0.7</footer>
+</body>
+</html>
